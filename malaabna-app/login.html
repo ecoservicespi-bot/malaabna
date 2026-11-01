@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https: http://localhost:* http://127.0.0.1:* blob: data:; worker-src 'self' blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>ملعبنا — تسجيل الدخول</title>
+<style>
+:root{
+ --login-bg:#0a0a0c;--login-panel:rgba(20,20,22,.9);
+ --login-accent:#d9a41f;--login-accent-hover:#c9971c;
+ --login-text:#f5f1e6;--login-muted:#a89f8d;--login-border:rgba(255,255,255,.12);
+ --login-danger:#fda4af;--login-radius:16px
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;height:100%}
+body{
+ font-family:"Cairo","IBM Plex Sans Arabic","Segoe UI",system-ui,-apple-system,"Noto Sans Arabic",Arial,sans-serif;
+ background:radial-gradient(ellipse at top left,#3a2f10 0%,transparent 45%),linear-gradient(135deg,#0a0a0c,#141416 70%,#0a0a0c);
+ display:flex;align-items:center;justify-content:center;min-height:100vh;
+ min-height:100dvh;color:var(--login-text);padding:calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom))
+}
+button,input{font:inherit}
+.card{
+ background:var(--login-panel);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+ width:min(100%,420px);border:1px solid var(--login-border);border-radius:20px;
+ box-shadow:0 20px 44px rgba(0,0,0,.32);padding:32px 28px;margin:auto
+}
+.logo{
+ width:76px;height:76px;display:block;margin:0 auto 16px;object-fit:contain;
+ border:3px solid rgba(255,255,255,.2);border-radius:50%;background:var(--login-accent);
+ padding:10px;box-shadow:0 8px 20px rgba(217,164,31,.25)
+}
+h1{font-size:24px;text-align:center;margin:0 0 4px;color:var(--login-text)}
+.sub{text-align:center;color:var(--login-muted);font-size:14px;margin:0 0 22px}
+.tabs{display:flex;background:rgba(217,164,31,.14);border:1px solid var(--login-border);border-radius:12px;padding:4px;margin-bottom:20px}
+.tabs button{
+ flex:1;min-height:42px;border:0;background:transparent;padding:8px;border-radius:9px;
+ cursor:pointer;font-size:14px;color:var(--login-muted);font-weight:600;transition:background .2s,color .2s
+}
+.tabs button.on{background:var(--login-accent);color:#181200;box-shadow:0 4px 12px rgba(217,164,31,.25)}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.field label{font-size:14px;color:var(--login-muted);font-weight:600}
+.field input{
+ min-height:48px;padding:0 14px;border:1px solid var(--login-border);
+ border-radius:12px;background:rgba(10,10,12,.68);color:var(--login-text);font-size:16px;
+ transition:border-color .2s,box-shadow .2s,background .2s
+}
+.field input::placeholder{color:#94a3b8}
+.field input:focus{outline:3px solid rgba(217,164,31,.3);outline-offset:1px;border-color:var(--login-accent);background:rgba(10,10,12,.92)}
+.field input[type=checkbox]{accent-color:var(--login-accent)}
+.btn{
+ width:100%;min-height:48px;border:0;border-radius:12px;background:var(--login-accent);
+ color:#181200;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;
+ box-shadow:0 4px 12px rgba(217,164,31,.3);transition:background .2s,transform .2s
+}
+.btn:hover{background:var(--login-accent-hover);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.6;cursor:default;transform:none}
+.msg{margin-top:12px;font-size:14px;text-align:center;min-height:20px;color:var(--login-muted)}
+.msg.err{color:var(--login-danger)}
+.msg.ok{color:#a7f3d0}
+.remember{display:flex;align-items:center;gap:9px;font-size:14px;color:var(--login-muted);margin:2px 0 8px;min-height:32px}
+.pane{display:none}
+.pane.on{display:block}
+.hint{font-size:13px;color:var(--login-muted);margin-top:-8px;margin-bottom:10px}
+button:focus-visible,input:focus-visible{outline:3px solid rgba(53,160,109,.72);outline-offset:2px}
+@media(max-width:420px){.card{padding:28px 20px}.logo{width:68px;height:68px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="card">
+ <img class="logo" src="icon-192.png" alt="ملعبنا">
+ <h1>ملعبنا</h1>
+ <div class="sub">نظام تسيير مدرسة كرة القدم</div>
+
+ <div class="tabs">
+  <button id="tabLogin" type="button" class="on">تسجيل الدخول</button>
+  <button id="tabReg" type="button">إنشاء حساب</button>
+ </div>
+
+ <div id="paneLogin" class="pane on">
+  <form id="formLogin">
+   <div class="field"><label>اسم المستخدم</label><input id="lu" autocomplete="username" required></div>
+   <div class="field"><label>كلمة السر</label><input id="lp" type="password" autocomplete="current-password" required></div>
+   <label class="remember"><input type="checkbox" id="lr" checked> تذكرني على هذا الجهاز</label>
+   <button class="btn" type="submit" id="loginBtn">دخول</button>
+   <div class="msg" id="loginMsg"></div>
+  </form>
+ </div>
+
+ <div id="paneReg" class="pane">
+  <form id="formReg">
+   <div class="field"><label>الاسم الكامل</label><input id="rn" autocomplete="name" required></div>
+   <div class="field"><label>اسم المستخدم</label><input id="ru" autocomplete="username" required></div>
+   <div class="field"><label>كلمة السر</label><input id="rp" type="password" autocomplete="new-password" minlength="8" required></div>
+   <div class="hint">8 أحرف على الأقل</div>
+   <div class="field"><label>تأكيد كلمة السر</label><input id="rp2" type="password" autocomplete="new-password" required></div>
+   <button class="btn" type="submit" id="regBtn">إنشاء الحساب والدخول</button>
+   <div class="msg" id="regMsg"></div>
+  </form>
+ </div>
+</div>
+
+<script src="login.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "packageId": "com.malaabna.app",
+  "host": "sync.clubagaplus.ma",
+  "name": "ملعبنا",
+  "launcherName": "ملعبنا",
+  "display": "standalone",
+  "themeColor": "#0a0a0c",
+  "themeColorDark": "#0a0a0c",
+  "navigationColor": "#0a0a0c",
+  "navigationColorDark": "#0a0a0c",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#0a0a0c",
+  "enableNotifications": false,
+  "startUrl": "/app/",
+  "iconUrl": "https://sync.clubagaplus.ma/app/icon-512.png",
+  "maskableIconUrl": "https://sync.clubagaplus.ma/app/icon-maskable-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./malaabna-release.jks",
+    "alias": "malaabna"
+  },
+  "appVersionName": "3.8.61",
+  "appVersionCode": 30861,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://sync.clubagaplus.ma/app/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": false,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://sync.clubagaplus.ma/app/",
+  "minSdkVersion": 23,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "displayOverride": [
+    "standalone"
+  ],
+  "appVersion": "3.8.61"
+}

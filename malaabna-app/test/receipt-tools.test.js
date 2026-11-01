@@ -1,0 +1,22 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');const zlib=require('node:zlib');
+const tools=require('../receipt-tools.js'),root=path.join(__dirname,'..');
+const cases=[
+ [0,'صفر درهم فقط لا غير'],[1,'درهم واحد فقط لا غير'],[2,'درهمان فقط لا غير'],[3,'ثلاثة دراهم فقط لا غير'],[11,'أحد عشر درهماً فقط لا غير'],[12,'اثنا عشر درهماً فقط لا غير'],[21,'واحد وعشرون درهماً فقط لا غير'],[100,'مائة درهم فقط لا غير'],[101,'مائة ودرهم واحد فقط لا غير'],[102,'مائة ودرهمان فقط لا غير'],[200,'مائتا درهم فقط لا غير'],[500,'خمسمائة درهم فقط لا غير'],[1250.5,'ألف ومائتان وخمسون درهماً وخمسون سنتيماً فقط لا غير'],[2000,'ألفا درهم فقط لا غير'],[21000,'واحد وعشرون ألف درهم فقط لا غير'],[2500000.01,'مليونان وخمسمائة ألف درهم وسنتيم واحد فقط لا غير'],[0.01,'صفر درهم وسنتيم واحد فقط لا غير'],[1.005,'درهم واحد وسنتيم واحد فقط لا غير']
+];
+for(const [n,expected] of cases)test('MAD amount in words: '+n,()=>assert.equal(tools.amountInWords(n,'درهم'),expected));
+test('invalid or out-of-range values do not produce a financial statement',()=>{for(const n of [-1,NaN,Infinity,'bad',1e12])assert.equal(tools.amountInWords(n,'درهم'),'');});
+test('currency aliases, cents and custom currency labels are preserved',()=>{assert.equal(tools.amountInWords(500,'MAD'),tools.amountInWords(500,'درهم'));assert.match(tools.amountInWords(10.25,'USD'),/خمسة وعشرون سنتاً/);assert.match(tools.amountInWords(500.5,'وحدة اختبار'),/وحدة اختبار/);});
+test('PDF engine and fonts are shipped locally in web, PWA and Electron packages',()=>{const pkg=require('../package.json');assert.ok(pkg.build.files.includes('vendor/**'));assert.ok(pkg.build.files.includes('receipt-tools.js'));const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');for(const name of ['receipt-tools.js','vendor/jspdf.umd.min.js','vendor/receipt-fonts.js']){assert.ok(fs.existsSync(path.join(root,name)));assert.ok(sw.includes(name));}assert.match(fs.readFileSync(path.join(root,'app.html'),'utf8'),/<script src="receipt-tools.js"><\/script>/);});
+function streams(bytes){const raw=Buffer.from(bytes).toString('latin1');const out=[];const re=/stream\r?\n/g;let m;while((m=re.exec(raw))){const end=raw.indexOf('endstream',re.lastIndex);try{out.push(zlib.inflateSync(Buffer.from(raw.slice(re.lastIndex,end),'latin1')).toString());}catch(e){}}return out;}
+test('real offline generator emits text/CMaps and only portrait A4 pages',async()=>{
+ globalThis.jspdf=require('../vendor/jspdf.umd.min.js');require('../vendor/receipt-fonts.js');
+ const d={s:{kind:'رسوم التسجيل'},rec:'2026-00128',issuedAt:'2026-10-27',school:'مدرسة الاختبار',paid:500,due:800,rest:300,currency:'درهم'};
+ const docBefore=JSON.stringify(d),rows=Array.from({length:60},(_,i)=>['بيان '+i,'بيانات محفوظة دون تغيير — '+i]);
+ const blob=await tools.createPDF({document:d,title:'وصل رسوم التسجيل',statement:'إقرار الاستلام للاعب آدم',rows});assert.equal(blob.type,'application/pdf');const bytes=await blob.arrayBuffer(),raw=Buffer.from(bytes).toString('latin1');assert.ok((raw.match(/\/Type \/Page\b/g)||[]).length>=3);const boxes=[...raw.matchAll(/\/MediaBox \[([^\]]+)\]/g)];assert.ok(boxes.length>=3);for(const box of boxes){const n=box[1].split(/\s+/).map(Number);assert.ok(Math.abs(n[2]-595.28)<.01);assert.ok(Math.abs(n[3]-841.89)<.01);}
+ const textStreams=streams(bytes);assert.ok(textStreams.some(s=>s.includes(' Tj')),'PDF contains actual text operators, not a full-page raster');assert.ok(textStreams.some(s=>s.includes('/CMapType 2')),'embedded Unicode mapping exists');assert.equal(JSON.stringify(d),docBefore,'rendering must not edit receipt archive');
+});
+test('Arabic ligatures map to searchable standard Unicode rather than presentation forms',async()=>{
+ globalThis.jspdf=require('../vendor/jspdf.umd.min.js');require('../vendor/receipt-fonts.js');
+ const blob=await tools.createPDF({document:{school:'مدرسة الاختبار',rec:'2026-1',currency:'درهم',paid:500},title:'إقرار الاستلام',statement:'لا تغيير في البيانات',rows:[['المبلغ بالحروف',tools.amountInWords(500,'درهم')]]});
+ const cmaps=streams(await blob.arrayBuffer()).filter(s=>s.includes('/CMapType 2'));assert.ok(cmaps.some(s=>s.includes('<06270644>')),'lam-alef ligature expands to standard Unicode in visual glyph order');assert.ok(cmaps.every(s=>!/<[0-9a-f]+><fe[fF][5-9a-f]>/i.test(s)),'Arabic lam-alef presentation-form codepoints are not used for search');
+});

@@ -1,0 +1,40 @@
+[
+  {
+    "width": 1280,
+    "formFailureRetainsInput": true,
+    "retryPersistsOnce": true,
+    "correctionFailureRollsBack": true,
+    "originalAndLedgerUnchanged": true,
+    "pageErrors": 0,
+    "horizontalOverflow": false,
+    "paperSizesAndPDF": true,
+    "verificationPublishAndRevoke": true,
+    "ocrPreviewCancelAndSelectiveApply": true,
+    "ocrStaleGuard": true,
+    "versionVisible": true,
+    "statusStatesVerified": true,
+    "inFlightEditsRemainPending": true,
+    "dailySearchFocusAndEmpty": true,
+    "duplicateBlockedWithoutWrite": true,
+    "dailyPermissionIsolation": true
+  },
+  {
+    "width": 390,
+    "formFailureRetainsInput": true,
+    "retryPersistsOnce": true,
+    "correctionFailureRollsBack": true,
+    "originalAndLedgerUnchanged": true,
+    "pageErrors": 0,
+    "horizontalOverflow": false,
+    "paperSizesAndPDF": true,
+    "verificationPublishAndRevoke": true,
+    "ocrPreviewCancelAndSelectiveApply": true,
+    "ocrStaleGuard": true,
+    "versionVisible": true,
+    "statusStatesVerified": true,
+    "inFlightEditsRemainPending": true,
+    "dailySearchFocusAndEmpty": true,
+    "duplicateBlockedWithoutWrite": true,
+    "dailyPermissionIsolation": true
+  }
+]

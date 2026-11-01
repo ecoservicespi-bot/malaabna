@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark" data-style="ams">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; script-src-elem 'self' 'wasm-unsafe-eval'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https: http://localhost:* http://127.0.0.1:* blob: data:; worker-src 'self' blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>ملعبنا — نظام إدارة النادي ومدرسة كرة القدم</title>
+<meta name="theme-color" content="#0a0a0c" />
+<link rel="manifest" href="manifest.webmanifest" data-base="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ملعبنا">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="application-name" content="ملعبنا">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="acctBar" style="display:none;align-items:center;justify-content:space-between;gap:10px;padding:7px 16px;background:#14538f;color:#fff;font-size:13px;position:sticky;top:0;z-index:70;font-family:'Segoe UI',system-ui,Arial,sans-serif">
+ <span id="acctBarUser">⚽ ملعبنا</span>
+ <span style="display:flex;gap:8px;align-items:center">
+  <button id="acctBarAddBtn" style="display:none;background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12.5px;min-height:28px">+ إضافة حساب</button>
+  <button id="acctBarManageBtn" style="display:none;background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12.5px;min-height:28px">🛡️ الحسابات والصلاحيات</button>
+  <button id="acctBarLogoutBtn" style="background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12.5px;min-height:28px">تسجيل الخروج 🔓</button>
+ </span>
+</div>
+<a class="skip" href="#mainContent">تجاوز القائمة والانتقال إلى المحتوى</a>
+<div class="app">
+ <aside class="side" id="side" aria-label="القائمة الرئيسية">
+  <div class="brand">
+   <div class="logo" id="brandLogo">⚽</div>
+   <div><b id="brandName">مدرسة كرة القدم</b><span>إدارة النادي والمدرسة الرياضية</span></div>
+  </div>
+  <nav class="nav" id="nav" aria-label="أقسام البرنامج"></nav>
+ </aside>
+ <div class="mobile-scrim" id="mobileScrim" aria-hidden="true"></div>
+ <main class="main" id="mainContent" tabindex="-1">
+  <div class="mobtop">
+   <button id="mobileMenuBtn" class="mobile-menu-btn" aria-controls="side" aria-label="فتح القائمة"><span>☰</span></button>
+   <div class="mobhead-brand"><div class="mobhead-logo" id="mobBrandLogo">⚽</div><div><b id="mobTitle">لوحة القيادة</b><span id="mobSchoolName">ملعبنا</span></div></div>
+   <button id="mobileHomeBtn" class="mobile-home-btn" aria-label="العودة إلى لوحة القيادة">⌂</button>
+  </div>
+  <section class="app-health no-print" aria-label="حالة قاعدة البيانات وإصدار التطبيق">
+   <div id="dataStatus" class="data-status" data-state="loading" role="status" aria-live="polite" aria-atomic="true">
+    <div class="data-status-line"><span class="data-status-dot" aria-hidden="true"></span><b id="dataStatusLabel">جارٍ التحقق من حالة البيانات…</b></div>
+    <p id="dataStatusDetail" class="data-status-detail">المؤشر يخص قاعدة البيانات، لا مدخلات النماذج التي لم تُحفظ.</p>
+   </div>
+   <span class="app-version" data-app-version dir="auto">الإصدار 3.8.61</span>
+  </section>
+  <div id="view"><div id="webBootStatus" class="boot-state" role="status">جارٍ تحميل التطبيق…</div></div>
+ </main>
+ <nav class="mobile-bottom-nav" id="mobileNav" aria-label="التنقل السريع"></nav>
+</div>
+
+<div id="syncToast" role="status" aria-live="polite"></div>
+<div class="ov" id="ov" aria-hidden="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="mh"><h3 id="mTitle">تعديل</h3><button id="modalCloseBtn" class="btn sm" aria-label="إغلاق النافذة">✕</button></div>
+  <div id="mError" class="modal-error" role="alert" aria-live="assertive" hidden></div>
+  <div class="mb" id="mBody"></div>
+  <div class="mfoot"><button id="modalSaveBtn" class="btn primary">حفظ</button><button id="modalCancelBtn" class="btn">إلغاء</button></div>
+</div></div>
+
+<!-- نافذة مستقلة لإضافة حساب جديد من داخل التطبيق (خاصة بالمدير) -->
+<div id="newAcctOv" aria-hidden="true" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center">
+ <div style="background:#fff;border-radius:14px;max-width:380px;width:92%;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.3);font-family:'Segoe UI',system-ui,Arial,sans-serif">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+   <h3 style="margin:0;font-size:17px">إضافة حساب جديد</h3>
+   <button id="newAcctCloseBtn" style="background:transparent;border:0;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+   <div><label style="font-size:13px;color:#7D7A75">الاسم الكامل</label>
+    <input id="naName" style="width:100%;min-height:42px;border:1px solid #E6E5E3;border-radius:8px;padding:0 12px;margin-top:4px"></div>
+   <div><label style="font-size:13px;color:#7D7A75">اسم المستخدم</label>
+    <input id="naUser" style="width:100%;min-height:42px;border:1px solid #E6E5E3;border-radius:8px;padding:0 12px;margin-top:4px"></div>
+   <div><label style="font-size:13px;color:#7D7A75">كلمة السر (8 أحرف على الأقل)</label>
+    <input id="naPass" type="password" style="width:100%;min-height:42px;border:1px solid #E6E5E3;border-radius:8px;padding:0 12px;margin-top:4px"></div>
+   <div><label style="font-size:13px;color:#7D7A75">الصلاحية</label>
+    <select id="naRole" style="width:100%;min-height:42px;border:1px solid #E6E5E3;border-radius:8px;padding:0 12px;margin-top:4px">
+     <option value="member" selected>عضو</option>
+     <option value="coach">مدرب</option>
+     <option value="accountant">محاسب</option>
+     <option value="reception">استقبال</option>
+     <option value="registrar">مسؤول التسجيل</option>
+     <option value="viewer">قارئ فقط</option>
+     <option value="admin">مدير</option>
+    </select></div>
+   <div id="naPermsWrap">
+    <label style="font-size:13px;color:#7D7A75">الأقسام المسموح لهذا الحساب بالوصول إليها</label>
+    <div id="naPerms" style="display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:6px;max-height:160px;overflow:auto;border:1px solid #E6E5E3;border-radius:8px;padding:8px"></div>
+   </div>
+   <div class="sub" style="font-size:12px;line-height:1.6;color:#8a4b08">لأسباب أمنية، الحسابات غير الإدارية لا تسجّل الدخول من نسخة سطح المكتب. فعّل دخول الهاتف للحسابات محدودة الصلاحية.</div>
+   <div id="naMsg" style="font-size:13px;min-height:16px;text-align:center"></div>
+   <button id="naSubmitBtn" style="min-height:46px;border:0;border-radius:8px;background:#d9a41f;color:#181200;font-weight:700;cursor:pointer;margin-top:4px">إنشاء الحساب</button>
+  </div>
+ </div>
+</div>
+
+<!-- نافذة إدارة الحسابات والصلاحيات (خاصة بالمدير) -->
+<div id="manageAcctOv" aria-hidden="true" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center">
+ <div style="background:#fff;border-radius:14px;max-width:640px;width:94%;max-height:86vh;overflow:auto;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.3);font-family:'Segoe UI',system-ui,Arial,sans-serif">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+   <h3 style="margin:0;font-size:17px">إدارة الحسابات والصلاحيات</h3>
+   <button id="manageAcctCloseBtn" style="background:transparent;border:0;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div class="sub" style="margin-bottom:12px">اختر لكل حساب دوره ثم حدّد الأقسام التي يُسمح له بالدخول إليها. تنبيه: لأسباب أمنية، تسجيل الدخول من نسخة سطح المكتب متاح للمدير فقط؛ فعّل دخول الهاتف للحسابات محدودة الصلاحية. حساب المدير يملك صلاحية كاملة.</div>
+  <div id="manageAcctList"></div>
+ </div>
+</div>
+
+<script src="receipt-tools.js"></script>
+<script src="vendor/jsqr.js" defer></script>
+<script src="vault.js"></script>
+<script src="bootstrap.js" defer></script>
+</body>
+</html>

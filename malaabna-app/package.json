@@ -1,0 +1,78 @@
+{
+  "name": "malaabna",
+  "version": "3.8.61",
+  "description": "ملعبنا — نظام إدارة النادي ومدرسة كرة القدم (عربي، مع تسجيل الدخول والصلاحيات)",
+  "main": "main.js",
+  "author": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis",
+    "dist:dir": "electron-builder --win nsis --dir",
+    "check": "node --check main.js && node --check preload.js && node --check vault.js && node --check finance.js && node --check scanner.js && node --check pwa.js && node --check app.js && node --check bootstrap.js && node --check login.js && node --check sw.js && node --check receipt-tools.js",
+    "test": "npm run test:unit && npm run test:ui && npm run test:pwa && npm run test:ocr",
+    "test:unit": "node --test test/finance-installments.test.js test/scanner.test.js test/vault-storage.test.js test/persistence-regression.test.js test/ocr-review-status.test.js test/daily-work.test.js test/attendance-safety.test.js test/system-status.test.js",
+    "test:ui": "node --test test/render-safety.test.js test/ui-smoke.test.js test/card-studio.test.js test/showcase-card.test.js test/progression-certificate.test.js test/card-verification.test.js test/expense-invoice-files.test.js test/expense-reporting.test.js test/receipt-branding.test.js test/receipt-tools.test.js test/receipt-installments-copy.test.js test/player-account-payments.test.js test/player-registration-fee.test.js test/receipt-corrections.test.js test/receipt-verification.test.js",
+    "test:pwa": "node --test test/pwa-cache.test.js",
+    "test:ocr": "node --test test/ocr-offline.test.js"
+  },
+  "devDependencies": {
+    "electron": "44.10.1",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "com.malaabna.app",
+    "productName": "ملعبنا",
+    "asar": true,
+    "files": [
+      "main.js",
+      "preload.js",
+      "vault.js",
+      "finance.js",
+      "scanner.js",
+      "login.html",
+      "login.js",
+      "app.html",
+      "bootstrap.js",
+      "app.js",
+      "app.css",
+      "assets/alwiam-logo.jpg",
+      "build/icon.ico",
+      "icon-192.png",
+      "ocr/**",
+      "receipt-tools.js",
+      "vendor/**"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "Malaabna-Setup.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ملعبنا",
+      "artifactName": "Malaabna-Setup.exe"
+    }
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "overrides": {
+    "@electron/get": "5.1.0"
+  }
+}

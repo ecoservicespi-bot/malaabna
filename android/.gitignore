@@ -1,0 +1,9 @@
+# Android signing material and local build state
+*.jks
+*.keystore
+local.properties
+.gradle/
+build/
+app/build/
+app/release/
+app/debug/

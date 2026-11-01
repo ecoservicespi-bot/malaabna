@@ -1,0 +1,50 @@
+[
+  {
+    "width": 1280,
+    "theme": "dark",
+    "healthy": true,
+    "lateAndFailed": true,
+    "isolatedDrill": true,
+    "diagnosticSanitized": true,
+    "offlineNotSuccess": true,
+    "permissionIsolation": true,
+    "noOverflow": true,
+    "noPageErrors": true
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "healthy": true,
+    "lateAndFailed": true,
+    "isolatedDrill": true,
+    "diagnosticSanitized": true,
+    "offlineNotSuccess": true,
+    "permissionIsolation": true,
+    "noOverflow": true,
+    "noPageErrors": true
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "healthy": true,
+    "lateAndFailed": true,
+    "isolatedDrill": true,
+    "diagnosticSanitized": true,
+    "offlineNotSuccess": true,
+    "permissionIsolation": true,
+    "noOverflow": true,
+    "noPageErrors": true
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "healthy": true,
+    "lateAndFailed": true,
+    "isolatedDrill": true,
+    "diagnosticSanitized": true,
+    "offlineNotSuccess": true,
+    "permissionIsolation": true,
+    "noOverflow": true,
+    "noPageErrors": true
+  }
+]

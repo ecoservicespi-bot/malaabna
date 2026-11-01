@@ -1,0 +1,12 @@
+{
+  "app": {
+    "tests": 194,
+    "pass": 194,
+    "fail": 0
+  },
+  "server": {
+    "tests": 79,
+    "pass": 79,
+    "fail": 0
+  }
+}

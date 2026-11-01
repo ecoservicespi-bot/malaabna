@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https: http://localhost:* http://127.0.0.1:* blob: data:; worker-src 'self' blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ملعبنا — تسجيل الدخول</title>
+<style>
+:root{
+ --text:#2C2C2B; --text2:#7D7A75; --bg:#FFFFFF; --soft:#F9F8F7; --soft2:#F0EFED; --bd:#E6E5E3;
+ --blue:#9a7410; --blueS:#f3e8c8; --red:#E56458; --redS:#FCE9E7; --r:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{font-family:"Cairo","IBM Plex Sans Arabic","Segoe UI",system-ui,-apple-system,"Noto Sans Arabic",Arial,sans-serif;background:linear-gradient(160deg,#08080a,#17171a 55%,#3a2f10);display:flex;align-items:center;justify-content:center;min-height:100vh;color:var(--text)}
+.card{background:var(--bg);width:100%;max-width:400px;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.25);padding:28px 26px;margin:16px}
+.logo{width:84px;height:84px;display:block;margin:0 auto 10px;object-fit:contain}
+h1{font-size:20px;text-align:center;margin:0 0 2px}
+.sub{text-align:center;color:var(--text2);font-size:13px;margin:0 0 20px}
+.tabs{display:flex;background:var(--soft2);border-radius:999px;padding:4px;margin-bottom:20px}
+.tabs button{flex:1;border:0;background:transparent;padding:9px 0;border-radius:999px;cursor:pointer;font-size:14px;color:var(--text2);font-weight:600}
+.tabs button.on{background:var(--bg);color:var(--blue);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:13px;color:var(--text2)}
+.field input{min-height:46px;padding:0 14px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);font-size:15px}
+.field input:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue)}
+.btn{width:100%;min-height:48px;border:0;border-radius:var(--r);background:linear-gradient(180deg,#f2c14e,#d9a41f);color:#181200;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
+.btn:hover{filter:brightness(.95)}
+.btn:disabled{opacity:.6;cursor:default}
+.msg{margin-top:12px;font-size:13.5px;text-align:center;min-height:18px}
+.msg.err{color:var(--red)}
+.msg.ok{color:#2b6b4a}
+.remember{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);margin:2px 0 8px}
+.pane{display:none}
+.pane.on{display:block}
+.hint{font-size:12px;color:var(--text2);margin-top:-6px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="card">
+ <img class="logo" src="icon-192.png" alt="ملعبنا">
+ <h1>ملعبنا</h1>
+ <div class="sub">نظام تسيير مدرسة كرة القدم</div>
+
+ <div class="tabs">
+  <button id="tabLogin" type="button" class="on">تسجيل الدخول</button>
+  <button id="tabReg" type="button">إنشاء حساب</button>
+ </div>
+
+ <div id="paneLogin" class="pane on">
+  <form id="formLogin">
+   <div class="field"><label>اسم المستخدم</label><input id="lu" autocomplete="username" required></div>
+   <div class="field"><label>كلمة السر</label><input id="lp" type="password" autocomplete="current-password" required></div>
+   <label class="remember"><input type="checkbox" id="lr" checked> تذكرني على هذا الجهاز</label>
+   <button class="btn" type="submit" id="loginBtn">دخول</button>
+   <div class="msg" id="loginMsg"></div>
+  </form>
+ </div>
+
+ <div id="paneReg" class="pane">
+  <form id="formReg">
+   <div class="field"><label>الاسم الكامل</label><input id="rn" autocomplete="name" required></div>
+   <div class="field"><label>اسم المستخدم</label><input id="ru" autocomplete="username" required></div>
+   <div class="field"><label>كلمة السر</label><input id="rp" type="password" autocomplete="new-password" minlength="8" required></div>
+   <div class="hint">8 أحرف على الأقل</div>
+   <div class="field"><label>تأكيد كلمة السر</label><input id="rp2" type="password" autocomplete="new-password" required></div>
+   <button class="btn" type="submit" id="regBtn">إنشاء الحساب والدخول</button>
+   <div class="msg" id="regMsg"></div>
+  </form>
+ </div>
+</div>
+
+<script src="login.js" defer></script>
+</body>
+</html>

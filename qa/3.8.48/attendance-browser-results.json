@@ -1,0 +1,32 @@
+[
+  {
+    "width": 1280,
+    "errors": 0,
+    "retrySingleFlight": true,
+    "storageFailureRetainsLocal": true,
+    "conflictRetainsLocal": true,
+    "reviewDownloadAPI": true,
+    "reviewReadOnly": true,
+    "realPortableCryptoRoundTrip": true,
+    "reviewPagination": true,
+    "inFlightEditsPending": true,
+    "noSilentDelete": true,
+    "confirmedAttendanceOnly": true,
+    "horizontalOverflow": false
+  },
+  {
+    "width": 390,
+    "errors": 0,
+    "retrySingleFlight": true,
+    "storageFailureRetainsLocal": true,
+    "conflictRetainsLocal": true,
+    "reviewDownloadAPI": true,
+    "reviewReadOnly": true,
+    "realPortableCryptoRoundTrip": true,
+    "reviewPagination": true,
+    "inFlightEditsPending": true,
+    "noSilentDelete": true,
+    "confirmedAttendanceOnly": true,
+    "horizontalOverflow": false
+  }
+]

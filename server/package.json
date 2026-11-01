@@ -1,0 +1,27 @@
+{
+  "name": "malaabna-sync-server",
+  "version": "3.8.61",
+  "description": "خادم مزامنة حقيقي لتطبيق ملعبنا — يعمل محلياً على جهازك ويُربط بالإنترنت عبر Cloudflare Tunnel",
+  "main": "server.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "prestart": "node copy-web.js",
+    "copy-web": "node copy-web.js",
+    "check:web-sync": "node check-web-sync.js",
+    "check": "node check-lock.js && node --check server.js && node --check backup-manager.js && node --check restore-drill.js && node --check attendance-sync.js && node --check durable-store.js && node --check crypt.js && node --check copy-web.js && node --check check-web-sync.js && node --check validation.js && node --check receipt-verification.js && node --check member-card-design.js && node --check ../malaabna-app/finance.js && node --check ../malaabna-app/pwa.js && npm run check:web-sync",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "cors": "2.8.6",
+    "dotenv": "16.6.1",
+    "express": "4.22.3",
+    "express-rate-limit": "7.5.1",
+    "nanoid": "3.3.19"
+  }
+}

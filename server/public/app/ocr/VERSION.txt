@@ -1,0 +1,6 @@
+Offline OCR assets bundled for Malaabna v3.8.16 review build
+Tesseract.js: 5.1.1 (npm package)
+Tesseract.js-core: 5.1.1 (npm package)
+Language data: tessdata_fast, downloaded 2026-10-20 from tesseract-ocr/tessdata_fast main branch
+Languages: Arabic (ara), French (fra), English (eng)
+The app loads the language data and engine locally; OCR requires no CDN access.
