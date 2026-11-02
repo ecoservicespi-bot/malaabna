@@ -36,7 +36,7 @@
   "fullScopeUrl": "https://sync.clubagaplus.ma/app/",
   "minSdkVersion": 23,
   "orientation": "portrait",
-  "fingerprints": [],
+  "fingerprints": ["26:82:5F:0F:CA:3A:C7:38:F0:92:B0:51:5B:71:32:BE:27:3F:7D:1B:AC:31:7B:1E:AD:28:37:CE:D4:4E:7A:39"],
   "additionalTrustedOrigins": [],
   "retainedBundles": [],
   "displayOverride": [
