@@ -17,7 +17,7 @@
   "maskableIconUrl": "https://sync.clubagaplus.ma/app/icon-maskable-512.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
-    "path": "./malaabna-release.jks",
+    "path": "./malaabna-release-v2.jks",
     "alias": "malaabna"
   },
   "appVersionName": "3.8.61",
@@ -36,7 +36,7 @@
   "fullScopeUrl": "https://sync.clubagaplus.ma/app/",
   "minSdkVersion": 23,
   "orientation": "portrait",
-  "fingerprints": ["26:82:5F:0F:CA:3A:C7:38:F0:92:B0:51:5B:71:32:BE:27:3F:7D:1B:AC:31:7B:1E:AD:28:37:CE:D4:4E:7A:39"],
+  "fingerprints": ["43:B7:99:7E:B0:28:13:E4:0E:7E:9F:A4:05:D4:3D:55:30:9D:37:BF:2C:7A:DA:2C:AF:C1:AF:12:E5:3E:69:6D"],
   "additionalTrustedOrigins": [],
   "retainedBundles": [],
   "displayOverride": [
