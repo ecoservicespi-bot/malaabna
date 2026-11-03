@@ -18,7 +18,7 @@
     "test:ocr": "node --test test/ocr-offline.test.js"
   },
   "devDependencies": {
-    "electron": "44.10.1",
+    "electron": "45.1.0",
     "electron-builder": "26.18.0"
   },
   "build": {
